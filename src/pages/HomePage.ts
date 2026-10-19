@@ -1,5 +1,4 @@
 import { Page, expect } from "@playwright/test";
-import { ErrorPage } from "./ErrorPage";
 
 /**
  * This class represents the Home Page of the eBay website and provides methods to interact with it.
@@ -9,7 +8,6 @@ export class HomePage {
 
   constructor(page: Page) {
     this.page = page;
-    //this.errorPage = new ErrorPage(page);
   }
 
   /**
