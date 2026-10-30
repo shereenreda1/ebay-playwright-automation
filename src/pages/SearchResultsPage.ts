@@ -21,7 +21,7 @@ export class SearchResultsPage {
     const currentUrl = await this.page.url();
     const url = new URL(currentUrl);
     const searchQuery = url.searchParams.get("_nkw");
-    expect(searchQuery).not.toBeNull();
+    await expect(searchQuery).not.toBeNull();
   }
 
   /**
@@ -44,7 +44,7 @@ export class SearchResultsPage {
    */
   async filterSearchResultsByTransmission(transmission: string) {
     // 1. Target the <details> section containing "Transmission"
-    const transmissionSection = this.page
+    const transmissionSection = await this.page
       .locator("details")
       .filter({ hasText: "Transmission" });
 
@@ -73,6 +73,6 @@ export class SearchResultsPage {
     const parsedUrl = new URL(currentUrl);
     const transmissionParam = parsedUrl.searchParams.get("Transmission");
 
-    expect(transmissionParam).toBe(transmission);
+    await expect(transmissionParam).toBe(transmission);
   }
 }

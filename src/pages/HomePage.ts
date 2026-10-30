@@ -37,13 +37,29 @@ export class HomePage {
    * @note This is used because the layout of the website changes based on the location, and some elements are not visible like transmission filter if the location is not set to the United States.
    */
   async changeLocationToUnitedStates() {
-    const frameLocator = this.page.frameLocator(
+    // 1. Click the button that triggers the shipping address modal/iframe
+    await this.page
+      .locator("button")
+      .filter({ hasText: /Add address|Egypt/i })
+      .first()
+      .click();
+
+    // 2. Define the frame locator
+    const shippingFrame = this.page.frameLocator(
       'iframe[title="Shipping Address"]',
     );
-    await frameLocator.locator("#country").selectOption("US");
-    await frameLocator.locator(".submit-button").click();
-    //wait 2 seconds for the page to load
-    await this.page.waitForTimeout(2000);
+    const countrySelect = shippingFrame.locator("#country");
+
+    // 3. Explicitly wait for the element inside the iframe to be visible
+    await countrySelect.waitFor({ state: "visible", timeout: 10000 });
+
+    // 4. Perform selectOption
+    await countrySelect.selectOption("US");
+
+    // 5. Submit form
+    const submitBtn = shippingFrame.locator(".submit-button");
+    await submitBtn.waitFor({ state: "visible", timeout: 5000 });
+    await submitBtn.click();
   }
 
   /**

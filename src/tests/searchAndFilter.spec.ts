@@ -7,13 +7,12 @@ import { ErrorPage } from "../pages/ErrorPage";
 test("Search for a specific car then filter by transmission type", async ({
   page,
 }) => {
-  
   const homePage = new HomePage(page);
   const errorPage = new ErrorPage(page);
   // Navigate to home and handle optional initial error safely
   await homePage.navigateToHomePage();
-  await errorPage.handleIfPresent(); 
-  await homePage.navigateToHomePage(); 
+  await errorPage.handleIfPresent();
+  await homePage.navigateToHomePage();
 
   // Validate main page and perform actions
   await homePage.validateMainPage();
@@ -22,7 +21,7 @@ test("Search for a specific car then filter by transmission type", async ({
 
   // Handle optional error after search, re-searching if it appeared
   if (await errorPage.handleIfPresent()) {
-    await homePage.navigateToHomePage(); 
+    await homePage.navigateToHomePage();
     await homePage.validateMainPage();
     await homePage.searchForItem(data.item);
   }
