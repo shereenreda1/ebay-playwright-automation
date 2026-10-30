@@ -29,7 +29,7 @@ The test framework validates core e-commerce capabilities, including product sea
 │   └── tests/
 │       └── search-and-filter.spec.ts  # Main E2E test scenarios
 │__playwright-report/
-│       └── index.html
+│       └── [index.html](https://shereenreda1.github.io/ebay-playwright-automation/playwright-report/index.html)
 ├── playwright.config.ts           # Playwright runner configuration
 ├── package.json
 └── README.md
