@@ -39,8 +39,7 @@ export class HomePage {
   async changeLocationToUnitedStates() {
     // 1. Click the button that triggers the shipping address modal/iframe
     await this.page
-      .locator("button")
-      .filter({ hasText: /Add address|Egypt/i })
+      .getByRole("button", { name: /Add address|Egypt/i })
       .first()
       .click();
 
@@ -48,6 +47,11 @@ export class HomePage {
     const shippingFrame = this.page.frameLocator(
       'iframe[title="Shipping Address"]',
     );
+    // First confirm the iframe document content has been loaded
+    await shippingFrame
+      .locator("body")
+      .waitFor({ state: "attached", timeout: 15000 });
+
     const countrySelect = shippingFrame.locator("#country");
 
     // 3. Explicitly wait for the element inside the iframe to be visible
