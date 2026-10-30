@@ -37,27 +37,22 @@ export class HomePage {
    * @note This is used because the layout of the website changes based on the location, and some elements are not visible like transmission filter if the location is not set to the United States.
    */
   async changeLocationToUnitedStates() {
-    // 1. Click the "Ship to" button to open the location selection iframe
+    // Click the "Ship to" button to open the location selection iframe
     // because of running in ci every time the pop will open to choose a location, so we need to click on the ship to button to open the iframe
     //await this.page.locator('button[aria-label^="Ship to"]').first().click();
-    // 2. Define the frame locator
+    // Define the frame locator
     const shippingFrame = this.page.frameLocator(
       'iframe[title="Shipping Address"]',
     );
-    // First confirm the iframe document content has been loaded
-    await shippingFrame
-      .locator("body")
-      .waitFor({ state: "attached", timeout: 15000 });
 
+    // Directly wait for the country dropdown to be visible; skip waiting for body
     const countrySelect = shippingFrame.locator("#country");
+    await countrySelect.waitFor({ state: "visible", timeout: 15000 });
 
-    // 3. Explicitly wait for the element inside the iframe to be visible
-    await countrySelect.waitFor({ state: "visible", timeout: 10000 });
-
-    // 4. Perform selectOption
+    // Perform selectOption
     await countrySelect.selectOption("US");
 
-    // 5. Submit form
+    // Submit form
     const submitBtn = shippingFrame.locator(".submit-button");
     await submitBtn.waitFor({ state: "visible", timeout: 5000 });
     await submitBtn.click();
