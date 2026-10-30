@@ -16,7 +16,7 @@ test("Search for a specific car then filter by transmission type", async ({
 
   // Validate main page and perform actions
   await homePage.validateMainPage();
-  await homePage.changeLocationToUnitedStates();
+  // await homePage.changeLocationToUnitedStates();
   await homePage.searchForItem(data.item);
 
   // Handle optional error after search, re-searching if it appeared
