@@ -47,7 +47,7 @@ export class HomePage {
 
     // Directly wait for the country dropdown to be visible; skip waiting for body
     const countrySelect = shippingFrame.locator("#country");
-    await countrySelect.waitFor({ state: "visible", timeout: 15000 });
+    //await countrySelect.waitFor({ state: "visible", timeout: 15000 });
 
     // Perform selectOption
     await countrySelect.selectOption("US");
