@@ -16,6 +16,7 @@ test("Search for a specific car then filter by transmission type", async ({
 
   // Validate main page and perform actions
   await homePage.validateMainPage();
+  //used only for local testing, not needed for CI/CD pipeline as the default location is already set to United States
   // await homePage.changeLocationToUnitedStates();
   await homePage.searchForItem(data.item);
 
