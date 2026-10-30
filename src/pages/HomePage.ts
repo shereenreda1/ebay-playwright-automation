@@ -37,12 +37,9 @@ export class HomePage {
    * @note This is used because the layout of the website changes based on the location, and some elements are not visible like transmission filter if the location is not set to the United States.
    */
   async changeLocationToUnitedStates() {
-    // 1. Click the button that triggers the shipping address modal/iframe
-    await this.page
-      .getByRole("button", { name: /Add address|Egypt/i })
-      .first()
-      .click();
-
+    // 1. Click the "Ship to" button to open the location selection iframe
+    // because of running in ci every time the pop will open to choose a location, so we need to click on the ship to button to open the iframe
+    //await this.page.locator('button[aria-label^="Ship to"]').first().click();
     // 2. Define the frame locator
     const shippingFrame = this.page.frameLocator(
       'iframe[title="Shipping Address"]',

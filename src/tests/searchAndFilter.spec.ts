@@ -28,6 +28,11 @@ test("Search for a specific car then filter by transmission type", async ({
 
   // Validate search results and apply filter
   const resultsPage = new SearchResultsPage(page);
+  if (await errorPage.handleIfPresent()) {
+    await homePage.navigateToHomePage();
+    await homePage.validateMainPage();
+    await homePage.searchForItem(data.item);
+  }
   await resultsPage.validateSearchResultsPage();
   await resultsPage.printSearchResultsCount();
   await resultsPage.filterSearchResultsByTransmission(data.Transmission);

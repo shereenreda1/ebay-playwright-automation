@@ -47,6 +47,9 @@ jobs:
     needs: test
     if: always() && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/feature/my-improvements')
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Download Playwright report artifact
         uses: actions/download-artifact@v4
