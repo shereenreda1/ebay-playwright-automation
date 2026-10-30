@@ -22,30 +22,30 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright Browsers
+      - name: Install Playwright Browsers with OS Dependencies
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
         run: npx playwright test
 
-      # 1. Upload the Playwright report directory as an artifact
+      # Upload the Playwright report directory as an artifact
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
-        if: always() # Ensures the report is uploaded even if some tests fail
+        if: always() # Ensures the report is uploaded even if tests fail
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
 
-  # Optional job to deploy directly to GitHub Pages
+  # Deploy report directly to GitHub Pages
   deploy-pages:
     needs: test
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/feature/my-improvements')
+    if: always() && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/feature/my-improvements')
     runs-on: ubuntu-latest
     steps:
       - name: Download Playwright report artifact
